@@ -29,3 +29,5 @@
    ```
 
 4. Open your browser and navigate to `http://localhost:3000` to use the app.
+
+<!-- 2:46 -->

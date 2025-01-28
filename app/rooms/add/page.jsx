@@ -101,8 +101,7 @@ const AddRoomPage = () => {
           <input
             type="file"
             className="file-input file-input-bordered grow"
-            name="amenities"
-            placeholder="Amenities"
+            name="image"
           />
         </label>
 

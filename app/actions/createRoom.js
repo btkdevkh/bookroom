@@ -14,6 +14,7 @@ async function createRoom(previousState, formData) {
   const location = formData.get("location");
   const availability = formData.get("availability");
   const amenities = formData.get("amenities");
+  const image = formData.get("image");
 
   if (!roomName || !description) {
     return {
@@ -22,7 +23,25 @@ async function createRoom(previousState, formData) {
   }
 
   // Get databases instance
-  const { databases } = await createAdminClient();
+  const { databases, storage } = await createAdminClient();
+
+  let imageID = "";
+
+  if (image && image.size > 0 && image.name !== "undefined") {
+    try {
+      const response = await storage.createFile("rooms", ID.unique(), image);
+      imageID = response.$id;
+    } catch (error) {
+      console.log("Error :", error);
+      return {
+        error: "Internal Server Error",
+      };
+    }
+  } else {
+    return {
+      error: "Image size must be under 1 MB",
+    };
+  }
 
   try {
     const { user } = await checkAuth();
@@ -44,6 +63,7 @@ async function createRoom(previousState, formData) {
       location,
       availability,
       amenities,
+      image: imageID,
     };
 
     await databases.createDocument(

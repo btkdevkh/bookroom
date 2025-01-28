@@ -68,10 +68,7 @@ function Header() {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-200 rounded-box z-[1] mt-3 w-52 p-8 shadow-sm text-center flex gap-8 justify-center"
             >
-              <Link
-                href="/rooms"
-                className="flex justify-start items-center gap-3"
-              >
+              <Link href="/" className="flex justify-start items-center gap-3">
                 <FaRestroom />
                 <span>Rooms</span>
               </Link>

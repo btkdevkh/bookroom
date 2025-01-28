@@ -3,6 +3,7 @@ import Back from "@/components/Back";
 import BookingForm from "@/components/BookingForm";
 import Heading from "@/components/Heading";
 import RoomCard from "@/components/RoomCard";
+import getImageUrl from "@/lib/helpers/geImageUrl";
 import Image from "next/image";
 
 const RoomPage = async ({ params }) => {
@@ -18,7 +19,11 @@ const RoomPage = async ({ params }) => {
       <RoomCard room={room}>
         <div className="flex gap-4">
           <Image
-            src={`/images/rooms/${room.image}`}
+            src={
+              room.image
+                ? `${getImageUrl(room.image)}`
+                : `/images/rooms/no-image.jpg`
+            }
             alt={room.name}
             width={200}
             height={100}

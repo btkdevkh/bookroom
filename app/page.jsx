@@ -3,6 +3,7 @@ import Heading from "@/components/Heading";
 import Link from "next/link";
 import Image from "next/image";
 import getRooms from "./actions/getRooms";
+import getImageUrl from "@/lib/helpers/geImageUrl";
 
 const HomePage = async () => {
   const rooms = await getRooms();
@@ -16,7 +17,11 @@ const HomePage = async () => {
           <RoomCard key={room.$id} room={room}>
             <div className="flex gap-4">
               <Image
-                src={`/images/rooms/${room.image}`}
+                src={
+                  room.image
+                    ? `${getImageUrl(room.image)}`
+                    : `/images/rooms/no-image.jpg`
+                }
                 alt={room.name}
                 width={100}
                 height={100}
