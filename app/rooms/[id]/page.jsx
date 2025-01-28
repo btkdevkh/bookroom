@@ -17,28 +17,30 @@ const RoomPage = async ({ params }) => {
       <Back title="Back to Rooms" />
 
       <RoomCard room={room}>
-        <div className="flex gap-4">
-          <Image
-            src={
-              room.image
-                ? `${getImageUrl(room.image)}`
-                : `/images/rooms/no-image.jpg`
-            }
-            alt={room.name}
-            width={200}
-            height={100}
-            priority
-            className="rounded-md"
-          />
+        <div className="mb-2 p-4 rounded-md shadow-xl bg-gray-900 flex justify-between items-center">
+          <div className="flex gap-4">
+            <Image
+              src={
+                room.image
+                  ? `${getImageUrl(room.image)}`
+                  : `/images/rooms/no-image.jpg`
+              }
+              alt={room.name}
+              width={200}
+              height={100}
+              priority
+              className="rounded-md"
+            />
 
-          <div>
-            <h3 className="font-bold">{room.name}</h3>
-            <p>Address: {room.address}</p>
-            <p>Availability: {room.availability}</p>
-            <p>Price: ${room.price_per_hour}/hour</p>
+            <div>
+              <h3 className="font-bold">{room.name}</h3>
+              <p>Address: {room.address}</p>
+              <p>Availability: {room.availability}</p>
+              <p>Price: ${room.price_per_hour}/hour</p>
 
-            <br />
-            <p>{room.description}</p>
+              <br />
+              <p>{room.description}</p>
+            </div>
           </div>
         </div>
       </RoomCard>

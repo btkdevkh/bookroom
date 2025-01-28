@@ -94,7 +94,7 @@ function Header() {
                     className="flex justify-start items-center gap-3"
                   >
                     <FaBuilding />
-                    <span>Mines</span>
+                    <span>My Rooms</span>
                   </Link>
 
                   <button

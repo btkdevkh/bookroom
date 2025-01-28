@@ -15,34 +15,36 @@ const HomePage = async () => {
       {rooms.length > 0 ? (
         rooms.map((room) => (
           <RoomCard key={room.$id} room={room}>
-            <div className="flex gap-4">
-              <Image
-                src={
-                  room.image
-                    ? `${getImageUrl(room.image)}`
-                    : `/images/rooms/no-image.jpg`
-                }
-                alt={room.name}
-                width={100}
-                height={100}
-                priority
-                className="rounded-md"
-              />
+            <div className="mb-2 p-4 rounded-md shadow-xl bg-gray-900 flex justify-between items-center">
+              <div className="flex gap-4">
+                <Image
+                  src={
+                    room.image
+                      ? `${getImageUrl(room.image)}`
+                      : `/images/rooms/no-image.jpg`
+                  }
+                  alt={room.name}
+                  width={100}
+                  height={100}
+                  priority
+                  className="rounded-md"
+                />
 
-              <div>
-                <h3 className="font-bold">{room.name}</h3>
-                <p>Address: {room.address}</p>
-                <p>Availability: {room.availability}</p>
-                <p>Price: ${room.price_per_hour}/hour</p>
+                <div>
+                  <h3 className="font-bold">{room.name}</h3>
+                  <p>Address: {room.address}</p>
+                  <p>Availability: {room.availability}</p>
+                  <p>Price: ${room.price_per_hour}/hour</p>
+                </div>
               </div>
-            </div>
 
-            <Link
-              href={`/rooms/${room.$id}`}
-              className="btn btn-ghost bg-slate-800 text-white"
-            >
-              View
-            </Link>
+              <Link
+                href={`/rooms/${room.$id}`}
+                className="btn btn-ghost bg-slate-800 text-white"
+              >
+                View
+              </Link>
+            </div>
           </RoomCard>
         ))
       ) : (
