@@ -1,8 +1,26 @@
-import Heading from "./Heading";
+"use client";
 
-const BookingForm = () => {
+import { useActionState, useEffect } from "react";
+import bookRoom from "@/app/actions/bookRoom";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
+const BookingForm = ({ roomId }) => {
+  const router = useRouter();
+  const [state, formAction] = useActionState(bookRoom, {});
+
+  useEffect(() => {
+    if (state.error) toast.error(state.error);
+    if (state.success) {
+      toast.success("You have successfully booked a room");
+      router.push("/bookings");
+    }
+  }, [state]);
+
   return (
-    <form>
+    <form action={formAction}>
+      <input type="hidden" name="room-id" value={roomId} />
+
       {/* Check-in Date & Time */}
       <div className="flex gap-4">
         <div className="w-full">

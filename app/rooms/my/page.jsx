@@ -15,7 +15,7 @@ const MyRoomPage = async () => {
 
       {rooms.length > 0 ? (
         rooms.map((room) => (
-          <RoomCard key={room.$id} room={room}>
+          <RoomCard key={room.$id}>
             <div className="mb-2 p-2 rounded-sm shadow-xl bg-gray-900 flex justify-between items-center text-white">
               <div className="flex items-center gap-4">
                 <Image

@@ -16,7 +16,7 @@ const RoomPage = async ({ params }) => {
       <Heading title={room.name} />
       <Back title="Back to Rooms" />
 
-      <RoomCard room={room}>
+      <RoomCard>
         <div className="mb-2 p-4 rounded-md shadow-xl bg-gray-900 flex justify-between items-center">
           <div className="flex gap-4">
             <Image
@@ -49,7 +49,7 @@ const RoomPage = async ({ params }) => {
       <h2 className="text-lg font-bold">Book this Room</h2>
       <br />
 
-      <BookingForm />
+      <BookingForm roomId={room.$id} />
     </>
   );
 };
