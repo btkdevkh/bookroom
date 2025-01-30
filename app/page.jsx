@@ -5,15 +5,22 @@ import Image from "next/image";
 import getRooms from "./actions/getRooms";
 import getImageUrl from "@/lib/helpers/geImageUrl";
 
-const HomePage = async () => {
+const HomePage = async ({ searchParams }) => {
   const rooms = await getRooms();
+  const query = searchParams.query;
+
+  const filterSearchedRooms = rooms?.filter((room) =>
+    query && query !== ""
+      ? room.name?.toLowerCase()?.includes(query?.toLowerCase())
+      : !room.name?.toLowerCase()?.includes(query?.toLowerCase())
+  );
 
   return (
     <>
       <Heading title="Available Rooms" />
 
-      {rooms.length > 0 ? (
-        rooms.map((room) => (
+      {filterSearchedRooms.length > 0 ? (
+        filterSearchedRooms.map((room) => (
           <RoomCard key={room.$id} room={room}>
             <div className="mb-2 p-4 rounded-md shadow-xl bg-gray-900 flex justify-between items-center">
               <div className="flex gap-4">

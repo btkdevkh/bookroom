@@ -1,10 +1,10 @@
 "use server";
 
-import { createAdminClient } from "@/lib/server/appwrite";
-import checkAuth from "./checkAuth";
+import { createAdminClient, createSessionClient } from "@/lib/server/appwrite";
 
 const cancelBooking = async (bookingId) => {
-  const { user } = await checkAuth();
+  const { account } = await createSessionClient();
+  const user = await account.get();
 
   if (!user) {
     return {
@@ -22,7 +22,7 @@ const cancelBooking = async (bookingId) => {
       bookingId
     );
 
-    if (booking.user_id !== user.id) {
+    if (booking.user_id !== user.$id) {
       return {
         error: "You are not authorized to cancel this booking",
       };

@@ -1,8 +1,7 @@
 "use server";
 
-import { createAdminClient } from "@/lib/server/appwrite";
+import { createAdminClient, createSessionClient } from "@/lib/server/appwrite";
 import { ID } from "node-appwrite";
-import checkAuth from "./checkAuth";
 import checkRoomAvailability from "./checkRoomAvailability";
 
 async function bookRoom(previousState, formData) {
@@ -19,7 +18,8 @@ async function bookRoom(previousState, formData) {
   const { databases } = await createAdminClient();
 
   try {
-    const { user } = await checkAuth();
+    const { account } = await createSessionClient();
+    const user = await account.get();
 
     if (!user) {
       return {
@@ -42,7 +42,7 @@ async function bookRoom(previousState, formData) {
     const data = {
       check_in: checkInDateTime,
       check_out: checkOutDateTime,
-      user_id: user.id,
+      user_id: user.$id,
       room_id: roomId,
     };
 

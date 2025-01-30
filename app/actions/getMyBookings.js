@@ -1,11 +1,11 @@
 "use server";
 
-import { createAdminClient } from "@/lib/server/appwrite";
-import checkAuth from "./checkAuth";
+import { createAdminClient, createSessionClient } from "@/lib/server/appwrite";
 import { Query } from "node-appwrite";
 
 const getMyBookings = async () => {
-  const { user } = await checkAuth();
+  const { account } = await createSessionClient();
+  const user = await account.get();
 
   if (!user) {
     return {
@@ -15,10 +15,11 @@ const getMyBookings = async () => {
 
   try {
     const { databases } = await createAdminClient();
+
     const { documents: bookings } = await databases.listDocuments(
       process.env.NEXT_PUBLIC_APPWRITE_DATABASE,
       process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS,
-      [Query.equal("user_id", user.id)]
+      [Query.equal("user_id", user.$id)]
     );
 
     return bookings;

@@ -1,8 +1,7 @@
 "use server";
 
-import { createAdminClient } from "@/lib/server/appwrite";
+import { createAdminClient, createSessionClient } from "@/lib/server/appwrite";
 import { ID } from "node-appwrite";
-import checkAuth from "./checkAuth";
 
 async function createRoom(previousState, formData) {
   const roomName = formData.get("room-name");
@@ -44,7 +43,8 @@ async function createRoom(previousState, formData) {
   }
 
   try {
-    const { user } = await checkAuth();
+    const { account } = await createSessionClient();
+    const user = await account.get();
 
     if (!user) {
       return {
@@ -53,7 +53,7 @@ async function createRoom(previousState, formData) {
     }
 
     const data = {
-      user_id: user.id,
+      user_id: user.$id,
       name: roomName,
       description,
       sqft,

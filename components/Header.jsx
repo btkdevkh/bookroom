@@ -1,9 +1,10 @@
 "use client";
 
-import destroySession from "@/app/actions/destroySession";
-import { useAuth } from "@/context/authContext";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/context/authContext";
+import destroySession from "@/app/actions/destroySession";
 import {
   FaUser,
   FaSignInAlt,
@@ -21,6 +22,8 @@ function Header() {
   const { isAuthenticated, setIsAuthenticated, currentUser, setCurrentUser } =
     useAuth();
 
+  const [query, setQuery] = useState("");
+
   const handleLogout = async () => {
     const { error, success } = await destroySession();
 
@@ -33,6 +36,14 @@ function Header() {
 
     toast.error(error);
   };
+
+  useEffect(() => {
+    if (query.length > 0) {
+      router.replace(`/?query=${query}`);
+    } else {
+      router.replace(`/`);
+    }
+  }, [query]);
 
   return (
     <div className="bg-base-200 sticky top-0">
@@ -50,6 +61,7 @@ function Header() {
               type="text"
               placeholder="Search"
               className="input input-bordered w-24 md:w-auto"
+              onChange={(e) => setQuery(e.target.value)}
             />
           </div>
 

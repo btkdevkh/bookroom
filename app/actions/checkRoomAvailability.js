@@ -1,12 +1,12 @@
 "use server";
 
-import { createAdminClient } from "@/lib/server/appwrite";
-import checkAuth from "./checkAuth";
+import { createAdminClient, createSessionClient } from "@/lib/server/appwrite";
 import { Query } from "node-appwrite";
 import { DateTime } from "luxon";
 
 const checkRoomAvailability = async (roomId, checkIn, checkOut) => {
-  const { user } = await checkAuth();
+  const { account } = await createSessionClient();
+  const user = await account.get();
 
   if (!user) {
     return {

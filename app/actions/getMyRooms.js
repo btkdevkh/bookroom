@@ -1,12 +1,12 @@
 "use server";
 
-import { createAdminClient } from "@/lib/server/appwrite";
-import checkAuth from "./checkAuth";
+import { createAdminClient, createSessionClient } from "@/lib/server/appwrite";
 import { redirect } from "next/dist/server/api-utils";
 import { Query } from "node-appwrite";
 
 const getMyRooms = async () => {
-  const { user } = await checkAuth();
+  const { account } = await createSessionClient();
+  const user = await account.get();
 
   if (!user) {
     redirect("/login");
@@ -17,7 +17,7 @@ const getMyRooms = async () => {
     const { documents: rooms } = await databases.listDocuments(
       process.env.NEXT_PUBLIC_APPWRITE_DATABASE,
       process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS,
-      [Query.equal("user_id", user.id)]
+      [Query.equal("user_id", user.$id)]
     );
 
     return rooms;
